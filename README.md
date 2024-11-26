@@ -33,5 +33,7 @@ Las siguientes variables determinan la ubicación del SFS original.
 psave="/initrd/mnt/dev_save"
 n="/0.sesion.vivaldi"
 ram="/tmp/vramfs"
-vtn="/v$RANDOM"
+aleat="$RANDOM"
+vtn="/v$aleat"
+ext=".xz.sfs"
 ```
