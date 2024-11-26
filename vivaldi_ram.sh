@@ -22,14 +22,12 @@ if [ -f "$ram/aleat.txt" ];then
 	vme="$dvt/merged"
 else
 	echo "$aleat" > "$ram/aleat.txt"
-fi
-echo "vtn '$vtn'"
-if [ ! -d /tmp/vramfs ];then
+	echo "vtn '$vtn'"
 	mkdir -pv "$ram"
 	mount -t ramfs ramfs "$ram"
 	cd "$ram"
 	busybox rm -vf "$ramsfs" "$sfs.2.sfs"
-	busybox cp -vf "$sfs" "$sfs.2.sfs"
+	dd if="$sfs" of="$sfs.2.sfs"
 	busybox cp -vf "$sfs.2.sfs" "$ramsfs"
 	mkdir -pv "$dvt"
 	cd "$dvt"
@@ -37,4 +35,8 @@ if [ ! -d /tmp/vramfs ];then
 	sleep 1
 fi
 echo "/usr/bin/vivaldi-stable --no-sandbox --user-data-dir='$vme' $@"
-/usr/bin/vivaldi-stable --no-sandbox --user-data-dir="$vme" $@
+if [[ "$(mount | grep -E "$ram/v*[0-9]+/merged")" != "" ]];then
+	/usr/bin/vivaldi-stable --no-sandbox --user-data-dir="$vme" $@
+else
+	echo "Error: El SFS no está montado."
+fi
