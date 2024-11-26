@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=pCompress
+Name[es]=pCompress
+Exec=pcompress
+Comment=File compressor
+Comment[es]=Compresor de archivos
+Icon=/usr/share/pixmaps/puppy/package_add.svg
+Categories=Utility;Favorite;
+MimeType=inode/directory
+Terminal=true
