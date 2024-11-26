@@ -33,7 +33,7 @@ if [ ! -d /tmp/vramfs ];then
 	busybox cp -vf "$sfs.2.sfs" "$ramsfs"
 	mkdir -pv "$dvt"
 	cd "$dvt"
-	montar_sfs_escritura "$ramsfs"
+	montar_sfs_escritura.sh "$ramsfs"
 	sleep 1
 fi
 echo "/usr/bin/vivaldi-stable --no-sandbox --user-data-dir='$vme' $@"
