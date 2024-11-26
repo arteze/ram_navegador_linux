@@ -1,38 +1,59 @@
 #!/bin/sh
 
-# Simples
-psave="/initrd/mnt/dev_save"
-n="/0.sesion.vivaldi"
-ram="/tmp/vramfs"
-aleat="$RANDOM"
-vtn="/v$aleat"
-ext=".xz.sfs"
+# Código creado por ChatGPT
 
-# Compuestos
-f="$n$ext"
-sfs="$psave$f"
-ramsfs="$ram$f"
-dvt="$ram$vtn" # /tmp/vramfs/v0
-vme="$dvt/merged"
-
-# Programa
-if [ -f "$ram/aleat.txt" ];then
-	vtn="/v$(cat $ram/aleat.txt)"
-	dvt="$ram$vtn" # /tmp/vramfs/v0
-	vme="$dvt/merged"
-else
-	echo "$aleat" > "$ram/aleat.txt"
-	echo "vtn '$vtn'"
-	mkdir -pv "$ram"
-	mount -t ramfs ramfs "$ram"
-	cd "$ram"
-	busybox rm -vf "$ramsfs" "$sfs.2.sfs"
-	dd if="$sfs" of="$sfs.2.sfs"
-	busybox cp -vf "$sfs.2.sfs" "$ramsfs"
-	mkdir -pv "$dvt"
-	cd "$dvt"
-	montar_sfs_escritura.sh "$ramsfs"
-	sleep 1
+# Verifica si los comandos necesarios están instalados
+if ! command -v mount &>/dev/null || ! command -v unionfs-fuse &>/dev/null; then
+	echo "Error: Asegúrate de tener 'mount' y 'unionfs-fuse' instalados."
+	echo "Instala unionfs-fuse con: sudo apt install unionfs-fuse"
+	exit 1
 fi
-echo "/usr/bin/vivaldi-stable --no-sandbox --user-data-dir='$vme' $@"
-/usr/bin/vivaldi-stable --no-sandbox --user-data-dir="$vme" $@
+
+# Archivos y directorios
+SFS_FILE="$1"		   # Archivo SFS (primer argumento del script)
+SFS_MOUNT_DIR="sfs_mount"  # Directorio donde se montará el SFS
+UPPER_DIR="upper"		  # Capa de escritura
+MERGED_DIR="merged"		# Punto de montaje final
+
+# Verifica que se pase un archivo SFS como argumento
+if [ -z "$SFS_FILE" ]; then
+	echo "Uso: $0 <archivo.sfs>"
+	exit 1
+fi
+
+# Verifica que el archivo SFS exista
+if [ ! -f "$SFS_FILE" ]; then
+	echo "Error: No se encontró el archivo SFS '$SFS_FILE'."
+	exit 1
+fi
+
+# Crea los directorios necesarios
+mkdir -pv "$SFS_MOUNT_DIR" "$UPPER_DIR" "$MERGED_DIR"
+
+# Monta el archivo SFS en modo solo lectura
+echo "Montando el archivo SFS en '$SFS_MOUNT_DIR'..."
+mount -t squashfs -o loop,ro "$SFS_FILE" "$SFS_MOUNT_DIR"
+if [ $? -ne 0 ]; then
+	echo "Error: No se pudo montar el archivo SFS."
+	exit 1
+fi
+
+# Monta el sistema combinado con UnionFS
+echo "Creando unión con UnionFS-FUSE en '$MERGED_DIR'..."
+unionfs-fuse -o cow "${UPPER_DIR}=RW:${SFS_MOUNT_DIR}=RO" "$MERGED_DIR"
+if [ $? -ne 0 ]; then
+	echo "Error: No se pudo crear la unión con UnionFS."
+	sudo umount "$SFS_MOUNT_DIR"
+	exit 1
+fi
+
+# Verifica el montaje exitoso
+if mountpoint -q "$MERGED_DIR"; then
+	echo "Sistema de archivos combinado montado exitosamente en '$MERGED_DIR'."
+	echo "Capa de escritura: $UPPER_DIR"
+	echo "Capa de solo lectura: $SFS_MOUNT_DIR (desde $SFS_FILE)"
+else
+	echo "Error: Algo falló durante el montaje."
+	umount "$SFS_MOUNT_DIR"
+	exit 1
+fi
