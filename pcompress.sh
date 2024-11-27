@@ -285,8 +285,7 @@ function pcompressScript() {
 }
 export -f pcompressScript
 
-# echo "xterm -title 'Adding files to: $salida' -e sh -c pcompressScript $salida"
-# xterm -title "Adding files to: $salida" -e sh -c "pcompressScript $salida"
+xdotool getactivewindow set_window --name "Creando '$salida'"
 pcompressScript "$salida"
 
 ### END ###
