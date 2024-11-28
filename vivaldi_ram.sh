@@ -21,17 +21,17 @@ if [ -f "$ram/aleat.txt" ];then
 	dvt="$ram$vtn" # /tmp/vramfs/v0
 	vme="$dvt/merged"
 else
-	echo "$aleat" > "$ram/aleat.txt"
 	echo "vtn '$vtn'"
 	mkdir -pv "$ram"
 	mount -t ramfs ramfs "$ram"
 	cd "$ram"
+	echo "$aleat" > "aleat.txt"
 	busybox rm -vf "$ramsfs" "$sfs.2.sfs"
 	dd if="$sfs" of="$sfs.2.sfs"
 	busybox cp -vf "$sfs.2.sfs" "$ramsfs"
 	mkdir -pv "$dvt"
 	cd "$dvt"
-	montar_sfs_escritura.sh "$ramsfs"
+	montar_sfs_escritura "$ramsfs"
 	sleep 1
 fi
 echo "/usr/bin/vivaldi-stable --no-sandbox --user-data-dir='$vme' $@"
