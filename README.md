@@ -37,3 +37,7 @@ aleat="$RANDOM"
 vtn="/v$aleat"
 ext=".xz.sfs"
 ```
+
+# pcompress original
+El pcompress original está en el siguiente enlace:
+ - https://github.com/puppylinux-woof-CE/woof-CE/blob/testing/woof-code/rootfs-skeleton/usr/bin/pcompress
