@@ -4,9 +4,9 @@
 
 export debug=0 #1 0
 
-nobre_icono="/usr/share/pixmaps/puppy/package_add"
-url_svg="$nobre_icono.svg"
-url_png="$nobre_icono.png"
+nombre_icono="/usr/share/pixmaps/puppy/package_add"
+url_svg="$nombre_icono.svg"
+url_png="$nombre_icono.png"
 if [ -f "$url_svg" ] ; then
 	ZICON="--window-icon=$url_svg"
 fi
