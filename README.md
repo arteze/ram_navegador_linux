@@ -39,5 +39,9 @@ ext=".xz.sfs"
 ```
 
 # pcompress original
+
 El pcompress original está en el siguiente enlace:
  - https://github.com/puppylinux-woof-CE/woof-CE/blob/testing/woof-code/rootfs-skeleton/usr/bin/pcompress
+
+El ícono original, que está en formato svg, en este repositorio convierto la versión a png
+ - https://github.com/puppylinux-woof-CE/woof-CE/blob/master/woof-code/rootfs-skeleton/usr/share/pixmaps/puppy/package_add.svg
