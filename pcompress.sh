@@ -11,7 +11,7 @@ if [ -f "$url_svg" ] ; then
 	ZICON="--window-icon=$url_svg"
 fi
 if [ -f "$url_png" ] ; then
-	cambiar_icono.sh "$url_png"
+	cambiar_icono.sh "$url_png" 1>/dev/null
 fi
 
 #inputfile
