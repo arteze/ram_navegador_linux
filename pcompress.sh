@@ -8,7 +8,7 @@ nobre_icono="/usr/share/pixmaps/puppy/package_add"
 url_svg="$nobre_icono.svg"
 url_png="$nobre_icono.png"
 if [ -f "$url_svg" ] ; then
-	ZICON='--window-icon=$url_svg'
+	ZICON="--window-icon=$url_svg"
 fi
 if [ -f "$url_png" ] ; then
 	cambiar_icono.sh "$url_png"
