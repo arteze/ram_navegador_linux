@@ -16,6 +16,7 @@ if [ ! -f "$ICON_PATH" ]; then
 fi
 
 # Obtener el ID de la ventana actual
+sleep 0.1
 WIN_ID=$(xdotool getwindowfocus)
 
 # Verificar si se obtuvo un ID válido
