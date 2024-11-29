@@ -4,8 +4,8 @@
 
 export debug=0 #1 0
 
-if [ -f /usr/share/pixmaps/puppy/package_add.svg ] ; then
-	ZICON='--window-icon=/usr/share/pixmaps/puppy/package_add.svg'
+if [ -f /usr/share/pixmaps/puppy/package_add.png ] ; then
+	cambiar_icono.sh /usr/share/pixmaps/puppy/package_add.png
 fi
 
 #inputfile
