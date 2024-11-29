@@ -16,6 +16,7 @@ dvt="$ram$vtn" # /tmp/vramfs/v0
 vme="$dvt/merged"
 
 # Programa
+cambiar_icono.sh /opt/vivaldi/product_logo_256.png 2>/dev/null
 if [ -f "$ram/aleat.txt" ];then
 	vtn="/v$(cat $ram/aleat.txt)"
 	dvt="$ram$vtn" # /tmp/vramfs/v0
@@ -31,7 +32,7 @@ else
 	busybox cp -vf "$sfs.2.sfs" "$ramsfs"
 	mkdir -pv "$dvt"
 	cd "$dvt"
-	montar_sfs_escritura.sh "$ramsfs"
+	montar_sfs_escritura "$ramsfs"
 	sleep 1
 fi
 echo "/usr/bin/vivaldi-stable --no-sandbox --user-data-dir='$vme' $@"
