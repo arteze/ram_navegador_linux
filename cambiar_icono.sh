@@ -2,7 +2,7 @@
 
 # Verificar si se proporcionó la ruta del ícono
 if [ -z "$1" ]; then
-  echo "Uso: $0 /ruta/al/icono.png"
+  echo "Uso: $0 /usr/share/icons/hicolor/256x256/apps/gtk3-demo-symbolic.symbolic.png"
   exit 1
 fi
 
