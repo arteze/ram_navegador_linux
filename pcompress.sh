@@ -41,7 +41,7 @@ if [ "$(which zip 2>/dev/null)" ] ; then
 	formatstr+=".zip     50%!.zip     100%!"
 fi
 if [ "$(which mksquashfs 2>/dev/null)" ] ; then #
-	formatstr+=".sfs     gzip!.gz.sfs gz"
+	formatstr+=".sfs     gzip!.gz.sfs gz!"
 fi
 if [ "$(which mksquashfs 2>/dev/null)" ] ; then 
 	formatstr+=".sfs     xz!.xz.sfs xz"
